@@ -27,7 +27,7 @@ int *ptr;
 // Dereference/Indirection operator
 int myvar = 25;
 int *foo = &myvar;
-int baz = *foo
+int baz = *foo;
 /* baz would have the value of myvar */
 
 
@@ -98,7 +98,7 @@ foo = new int[5];
    If allocation fails, an exemption is thrown.
 */
 foo = new int[5]; // To prevent a bad_alloc error, add (nothrow)
-foo - new (nothrow) int[5];
+foo = new (nothrow) int[5];
 
 // Deleting Pointers
 double *pvalue = NULL; // pointer initialized with NULL
@@ -476,13 +476,98 @@ void Set::operator+(const Set set) {
 Set Set::operator^(const Set set) {
     return this->setIntersection(set);
 }
+// Overload + operator to add two Box objects.
+Box operator+(const Box& b) {
+      Box box;
+      box.length = this->length + b.length;
+      box.breadth = this->breadth + b.breadth;
+      box.height = this->height + b.height;
+      return b
+}
 
+
+// overloaded < operator
+bool operator <(const Distance& d) {
+      if(feet < d.feet) {
+            return true;
+      }
+      if(feet == d.feet && inches < d.inches) {
+            return true;
+      }
+      return false;
+};
+// overloaded in
+std::ostream& operator<< (std::ostream &out, const Point &point)
+{
+      out << "Point(" << point.m_x << ", " << point.m_y << ", " << point.m_z << ")";
+      return out;
+}
+// overloaded out
+std::istream& operator>> (std::istream &in, Point &point)
+{
+      in >> point.m_x;
+      in >> point.m_y;
+      in >> point.m_z;
+      return in;
+}
+
+
+// Templates
+/*
+   C++ has the ability to define functions with generic
+   types, known as function templates.
+*/
+template <class Type>
+class Set {
+private:
+      int pSize;
+      Type *set;
+      Set<Type> setUnion(Set<Type>);
+public:
+      Set(int = DEFAULT_SIZE);
+      Set(Type [], int);
+      Set(const Set &set);
+      ~Set();
+};
+template <class Type>
+Set<Type> Set<Type>::setUnion(Set<Type> other) {
+    /*...*/
+}
+template <class Type>
+Set<Type>::Set(int size) {
+    /*...*/
+}
+template <class Type>
+Set<Type>::Set(Type arr[], int size) {
+    /*...*/
+}
+template <class Type>
+Set<Type>::Set(const Set &set) {
+    /*...*/
+}
+template <class Type>
+Set<Type>::~Set() {
+    delete [] set;
+}
+
+
+// Aggregation
+/*
+   Class contains an instance of another class.
+   Ex. Class House has an instnace of a Room.
+*/
+class House {
+private:
+      Room room;
+}
 
 //
 //
 //  Chapter 15
 //  Inheritance and Polymorphism
 //
+
+
 //
 
 // Inheritance
@@ -558,6 +643,12 @@ getVar(); // Call the most-derived version of getVar();
    So, a virtual function is overridden, and a non-virtual function is
       redefined.
 */
+
+
+// Polymorphism
+/* C++ polymorphism means that a call to a member function will cause a
+   different function to be executed depending on the type of object that
+   invokes the function. */
 
 
 // Virtual Destructor
